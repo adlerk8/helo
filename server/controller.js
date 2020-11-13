@@ -23,23 +23,21 @@ module.exports = {
         const {username, password} = req.body;
         const db = req.app.get('db');
 
-        const foundUser = await db.check_user(username);
-        if(!foundUser[0]){
-            return res.status(400).send("Dang it! That didn't work.")
+        const [foundUser] = await db.check_user(username);
+        if(!foundUser){
+            return res.status(400).send("Dang it! You need to register first.")
         }
 
-        const aunthenticated = bcrypt.compareSync(password, foundUser.password);
+        const authenticated = bcrypt.compareSync(password, foundUser.password);
         if(authenticated) {
             req.session.user = {
-                username: newUser.username,
-                profile: newUser.profile_pic,
-                userId: newUser.id
+                username: foundUser.username,
+                profile: foundUser.profile_pic,
+                userId: foundUser.id
             }
             res.status(200).send(req.session.user);
         } else {
             res.status(401).send("Dang it! That didn't work.")
         }
-        
-        res.status(200).send(req.session.user);
     }
 }

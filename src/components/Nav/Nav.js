@@ -11,8 +11,8 @@ class Nav extends Component {
                 <button><Link to="/new">New Post</Link></button>
                 <button><Link to="/">Logout</Link></button>
                 <div>
-                    <div>{this.props.username}</div>
-                    <div>{this.props.profilePic}</div>
+                    <div>{this.props.user.username}</div>
+                    <div>{this.props.user.profilePic}</div>
                 </div>
             </div>
         )
