@@ -5,7 +5,9 @@
   "main": "server/index.js",
   "proxy": "http://localhost:4040",
   "nodemonConfig": {
-    "ignore":["src/*"]
+    "ignore": [
+      "src/*"
+    ]
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
@@ -15,6 +17,7 @@
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "massive": "^6.6.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
