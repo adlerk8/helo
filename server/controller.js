@@ -39,5 +39,12 @@ module.exports = {
         } else {
             res.status(401).send("Dang it! That didn't work.")
         }
+    },
+    getPosts: async (req, res) => {
+        const {id} = req.params;
+        const db = req.app.get('db');
+
+        const posts = await db.get_posts(id);
+        res.status(200).send(posts);
     }
 }

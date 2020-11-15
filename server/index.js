@@ -29,5 +29,6 @@ massive({
 
 app.post('/api/auth/register', ctrl.register);
 app.post('/api/auth/login', ctrl.login);
+app.get('/api/posts/:userid', ctrl.getPosts);
 
 app.listen(SERVER_PORT, () => console.log(`Server is up and running on port ${SERVER_PORT}, coach!`));
