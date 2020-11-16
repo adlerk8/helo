@@ -15,12 +15,7 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        axios.get('/api/posts/:userid')
-        .then((res) => {
-            this.setState({
-                posts: res.data
-            })
-        }).catch(err => {console.log(err)})
+        this.searchPosts();
     };
 
     handleChange = (e) => {
@@ -30,7 +25,18 @@ class Dashboard extends Component {
     };
 
     searchPosts = () => {
-        
+        axios.get('/api/posts/:userid')
+        .then((res) => {
+            this.setState({
+                posts: res.data
+            })
+        }).catch(err => {console.log(err)})
+    }
+
+    unseeMyPosts = () => {
+        this.setState({
+            userposts: false
+        })
     }
 
     resetSearch = () => {
@@ -52,9 +58,9 @@ class Dashboard extends Component {
                             onChange={e => this.handleChange(e)}
                         />
                     </form>
-                    <button onClick={e => this.handleChange(e)}>Search</button>
+                    <button onClick={this.searchPosts}>Search</button>
                     <button onClick={this.resetSearch}>Reset</button>
-                    <input type="checkbox" name="myposts"/>
+                    <input type="checkbox" name="myposts" onChange={this.unseeMyPosts}/>
                     <label htmlFor="myposts">My Posts</label>
                 </div>
                 <Post/>

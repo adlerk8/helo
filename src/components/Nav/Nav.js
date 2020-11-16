@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 class Nav extends Component {
@@ -12,7 +12,7 @@ class Nav extends Component {
                 <button><Link to="/">Logout</Link></button>
                 <div>
                     <div>{this.props.user.username}</div>
-                    <div>{this.props.user.profilePic}</div>
+                    <div><img src={this.props.user.profile} alt="avatar"/></div>
                 </div>
             </div>
         )

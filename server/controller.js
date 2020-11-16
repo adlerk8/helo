@@ -11,7 +11,7 @@ module.exports = {
         }
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);
-        const [newUser] = await db.add_user([username, hash]);
+        const [newUser] = await db.add_user([username, hash, `https://robohash.org/${username}`]);
         req.session.user = {
             username: newUser.username,
             profile: newUser.profile_pic,
@@ -42,9 +42,21 @@ module.exports = {
     },
     getPosts: async (req, res) => {
         const {id} = req.params;
+        const {userposts, search} = req.query;
         const db = req.app.get('db');
-
-        const posts = await db.get_posts(id);
-        res.status(200).send(posts);
+        
+        if(userposts === true && search !== null) {
+            const foundPost = db.posts.where({"title like": "%search%"})
+            res.status(200).send(foundPost)
+        } else if (userposts === false && search !== null) {
+            const foundPost = db.posts.where({"title like": "%search%", "author_id !=": id})
+            res.status(200).send(foundPost)
+        } else if (userposts === false && search === null) {
+            const foundPost = db.posts.where({"author_id !=": id})
+            res.status(200).send(foundPost)
+        } else {
+            const posts = await db.get_posts(id);
+            res.status(200).send(posts);
+        }
     }
 }
