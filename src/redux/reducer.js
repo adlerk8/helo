@@ -5,7 +5,6 @@ const initialState = {
 }
 
 const LOGIN_USER = "LOGIN_USER";
-const GET_USER_POSTS = "GET_USER_POSTS";
 
 export function loginUser(user){
     return {

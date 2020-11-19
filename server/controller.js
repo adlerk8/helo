@@ -40,6 +40,10 @@ module.exports = {
             res.status(401).send("Dang it! That didn't work.")
         }
     },
+    logout: (req, res) => {
+        req.session.destroy();
+        res.sendStatus(200);
+    },
     getPosts: async (req, res) => {
         const {id} = req.params;
         const {userposts, search} = req.query;
@@ -57,6 +61,18 @@ module.exports = {
         } else {
             const posts = await db.get_posts(id);
             res.status(200).send(posts);
+        }
+    },
+    getPost: async (req, res) => {
+        const {id} = req.params;
+        const db = req.app.get('db');
+
+        const singlePost = await db.get_post(id)
+        if (singlePost) {
+
+            res.status(200).send(singlePost)
+        } else {
+            res.status(404).send("Oops! We cannot display posts at this time.")
         }
     }
 }
