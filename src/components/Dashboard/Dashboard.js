@@ -4,8 +4,8 @@ import axios from 'axios';
 import Post from '../Post/Post';
 
 class Dashboard extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             posts: [],
@@ -25,7 +25,7 @@ class Dashboard extends Component {
     };
 
     searchPosts = () => {
-        axios.get('/api/posts/:userid')
+        axios.get(`/api/posts/${props.userId}`)
         .then((res) => {
             this.setState({
                 posts: res.data
@@ -46,7 +46,11 @@ class Dashboard extends Component {
     }
 
     render() {
-        const {search} = this.state;
+        const {search, posts} = this.state;
+
+        const displayPosts = posts.map((e, id) => {
+            return <Post key={e.id} to="/post/post:id">{e}</Post>
+        });
         return (
             <div>
                 <div>
@@ -63,7 +67,9 @@ class Dashboard extends Component {
                     <input type="checkbox" name="myposts" onChange={this.unseeMyPosts}/>
                     <label htmlFor="myposts">My Posts</label>
                 </div>
-                <Post/>
+                <div className="postsBox">
+                    {displayPosts}
+                </div>
             </div>
         )
     }

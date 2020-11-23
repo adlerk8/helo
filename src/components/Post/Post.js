@@ -19,7 +19,6 @@ class Post extends Component {
     }
 
     getPost = () => {
-        const 
         axios
         .get(`/api/post/${id}`)
         .then((res) => {
