@@ -59,18 +59,17 @@ module.exports = {
             const foundPost = db.posts.where({"author_id !=": id})
             res.status(200).send(foundPost)
         } else {
-            const posts = await db.get_posts(id);
+            const posts = await db.get_posts();
             res.status(200).send(posts);
         }
     },
     getPost: async (req, res) => {
-        const {id} = req.params;
+        const {postid} = req.params;
         const db = req.app.get('db');
 
-        const singlePost = await db.get_post(id)
+        const singlePost = await db.get_post(postid)
         if (singlePost) {
-
-            res.status(200).send(singlePost)
+            res.status(200).send(singlePost[0])
         } else {
             res.status(404).send("Oops! We cannot display posts at this time.")
         }

@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 class Post extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         
         this.state = {
             title: '',
@@ -20,12 +20,15 @@ class Post extends Component {
 
     getPost = () => {
         axios
-        .get(`/api/post/${id}`)
+        .get(`/api/post/${this.props.match.params.id}`)
         .then((res) => {
             console.log(res.data)
             this.setState({
-                title: res.data
-                
+                title: res.data.title,
+                img: res.data.img,
+                content: res.data.content,
+                author: res.data.username,
+                authorPicture: res.data.profile_pic
             })
         })
         .catch((err) => {
@@ -34,11 +37,11 @@ class Post extends Component {
     }
 
     render() {
-        const {author, authorPicture, img, content} = this.state;
+        const {author, authorPicture, img, content, title} = this.state;
         return (
             <div>
                 <div className="topPost">
-                    <h2>Post Title</h2>
+                    <h2>{title}</h2>
                     <div className="postAuthorInfo">
                         <p>by {author}</p>
                         <img src={authorPicture} alt="author"/>

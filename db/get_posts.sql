@@ -1,2 +1,2 @@
-SELECT (posts.author_id, users.username, users.profile_pic) FROM posts
+SELECT users.username, users.profile_pic, posts.* FROM posts
 JOIN users ON users.id = posts.author_id;
